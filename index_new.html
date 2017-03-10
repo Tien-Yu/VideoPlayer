@@ -14,42 +14,35 @@
 
 <!--video-->
 <video id="mainPlayer" class="cmainPlayer" controls preload="auto">
-    <source src="./videos/Ben Carson TED Talk.mp4" type="video/mp4">
+    <source src="./videos/TEDTalk.mp4" type="video/mp4">
     <p>你的瀏覽器不支援 video 標籤</p>
     <p>下載 <a href="./videos/Ben Carson TED Talk.mp4">mp4 格式</a>的影片檔</p>
 </video>
 <!--速度-->
-<form class="cspeed" name="fnspeed" align="center">
-	<input id="speedRange" type="range" min="0.5" max="4" step="0.1" value="1" name="nspeed">
-	<input id="speedShow" type="text" name="show" size="1" value="1" onchange="changeSpeed(this.value)">
+<form class="cspeed" align="center">
+	<img id="loop" src="pics/loop_.png">
+	<img id="shuffle" src="pics/shuffle_.png">
+	<input id="speedRange" type="range" min="0.25" max="4" step="0.05" value="1">
+	<input id="speedShow" type="text" size="1" value="1">
 	<br>
 </form>
 <br>
 <div class="videoList">
-	<video class="prepareList" preload="auto" onclick="changeVideo(document.getElementById('prepareVideo1').id)">
-		<source id="prepareVideo1" src="./videos/snake.mp4" type="video/mp4">
-		<p>你的瀏覽器不支援 video 標籤</p>
-		<p>下載 <a href="./videos/snake.mp4">mp4 格式</a>的影片檔</p>
-	</video>
-
-	<video class="prepareList" preload="auto" onclick="changeVideo(document.getElementById('prepareVideo2').id)">
-		<source id="prepareVideo2" src="./videos/2013QFcamp2.mp4" type="video/mp4">
-		<p>你的瀏覽器不支援 video 標籤</p>
-		<p>下載 <a href="./videos/2013QFcamp2.mp4">mp4 格式</a>的影片檔</p>
-	</video>
-
-	<video class="prepareList" preload="auto" onclick="changeVideo(document.getElementById('prepareVideo3').id)">
-		<source id="prepareVideo3" src="./videos/MOV_0197.mp4" type="video/mp4">
-		<p>你的瀏覽器不支援 video 標籤</p>
-		<p>下載 <a href="./videos/MOV_0197.mp4">mp4 格式</a>的影片檔</p>
-	</video>
-
-	<video class="prepareList" preload="auto" onclick="changeVideo(document.getElementById('prepareVideo4').id)">
-		<source id="prepareVideo4" src="./videos/MOV_0200.mp4" type="video/mp4">
-		<p>你的瀏覽器不支援 video 標籤</p>
-		<p>下載 <a href="./videos/MOV_0200.mp4">mp4 格式</a>的影片檔</p>
-	</video>
+	<video id="prepareVideo1" src="./videos/snake.mp4" class="prepareList" preload="auto"></video>
+	<video id="prepareVideo2" src="./videos/2013QFcamp2.mp4" class="prepareList" preload="auto"></video>
+	<video id="prepareVideo3" src="./videos/MOV_0197.mp4" class="prepareList" preload="auto"></video>
+	<video id="prepareVideo4" src="./videos/TEDTalk.mp4" class="prepareList" preload="auto"></video>
+	<video id="prepareVideo5" src="./videos/MOV_0200.mp4" class="prepareList" preload="auto"></video>
 </div>
+
+<select class="videoList_hid" id="playList">
+	<option id="prepareVideo1o">snake.mp4</option>
+	<option id="prepareVideo2o">2013QFcamp2.mp4</option>
+	<option id="prepareVideo3o">MOV_0197.mp4</option>
+	<option id="prepareVideo4o" selected>TEDTalk.mp4</option>
+	<option id="prepareVideo5o">MOV_0200.mp4</option>
+</select>
+
 
 <!----------------JavaScript----------------->
 <script src="js/videoPlayer.js"></script>

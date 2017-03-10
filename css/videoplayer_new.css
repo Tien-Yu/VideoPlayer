@@ -1,7 +1,7 @@
 
 body
 {
-	background-color: rgba(0, 191, 255, 0.7);
+	background-color: #4682B4;
 	background-attachment:fixed;
 	background-size:100%;
 }
@@ -24,5 +24,11 @@ video.prepareList
 .videoList
 {
 	text-align: center;
+
+}
+
+.videoList_hide
+{
+	display: none;
 
 }
