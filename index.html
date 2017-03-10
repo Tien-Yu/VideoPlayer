@@ -3,25 +3,7 @@
 <head>
 	<title>SKYAND-HW06</title>
 	<link rel="shortcut icon" href="http://m100.nthu.edu.tw/~s100071049/pics/iconDSno.ico" type="image/x-icon" >
-	<style>
-		body{background-image:url(./backgrounds/background.jpg);background-attachment:fixed;background-size:100%;}
-		.center{position:absolute;left:245px;text-align:center;border:#ff7700 5px;background-color:rgba(20%,0%,0%,0.6);border-style:dashed;border-radius:20px; width:845px; height:600px;}
-		.previous{position:absolute;right:750px;bottom:150px}
-		.next{position:absolute;left:750px;bottom:150px}
-		video{background:black;}
-		form.cplayList{border:#ff7700 5px;background-color:rgba(20%,0%,0%,0.6);border-style:dashed;border-radius:20px; width:200px; height:200px; position:absolute;left:750px;top:120px}
-		form.cspeed{border:#ff7700 5px;background-color:rgba(20%,0%,0%,0.6);border-style:dashed;border-radius:20px;position:absolute;left:120px;top:470px;width:250px;height:80px;}
-		form.cabrepeat{border:#ff7700 5px;background-color:rgba(20%,0%,0%,0.6);border-style:dashed;border-radius:20px;position:absolute;right:750px;top:70px;width:250px;height:187px;}
-		.Se{background-color:green}
-		.now1{position:absolute;left:25px;bottom:72px}
-		.now2{position:absolute;left:145px;bottom:72px}
-		.play{position:absolute;left:65px;bottom:5px}
-		.stop{position:absolute;left:135px;bottom:5px}
-		.random{position:absolute;left:400px;bottom:80px}
-		.auto{position:absolute;left:600px;bottom:80px}
-		.single{position:absolute;left:500px;bottom:70px}
-	</style>
-	
+	<link href="css/videoplayer.css" rel="stylesheet">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
@@ -55,7 +37,7 @@
 <body onBeforeUnload="record(d.currentTime, currentTrack, randomPlay, d.playbackRate, lastTrack)">
 <div class="center">
 	<br>
-	<video id="myPlayer" src="" controls width="600" height="400" style="border:15px double #FFFF99">
+	<video id="myPlayer" src="" controls width="600" height="400" style="border:15px double #FFFF99" speed="3">
 		您的瀏覽器不支援HTML 5影片播放標籤video格式。
 		Your browser doesn't support the video tag.
 	</video><br>
@@ -90,16 +72,10 @@
 <form class="cplayList" name="fnplayList" align="center">
 	<br>
 	<select id="playList" size="8" ondblclick="playTrack()" class="Se">
-        <option>jchou.mp3</option>
-        <option>MOV_0200.mp4</option>
-		<option>snake.mp4</option>
-		<option>pop.00064.mp3</option>
-		<option>pop.00065.mp3</option>
-		<option>pop.00066.mp3</option>
-		<option>pop.00067.mp3</option>
-		<option>pop.00068.mp3</option>
-		<option>pop.00069.mp3</option>
-		<option>pop.00070.mp3</option>
+        <option value="2013QFcamp1.mp4">2013QFcamp1</option>
+        <option value="2013QFcamp2.mp4">2013QFcamp2</option>
+		<option value="snake.mp4">snake</option>
+		<option value="Ben Carson TED Talk.mp4">Ben Carson TED Talk</option>
     </select>
 </form>
 	<!--播放型態-->
@@ -168,7 +144,7 @@
         if(trackNames.selectedIndex >= 0){ // 防止空白處被點選時產生之錯誤
 			clearTimeout(timer); // 免除 playBetween 設下的暫停影響
 			currentTrack = trackNames.selectedIndex;
-            d.src = "./videos/" + trackNames[currentTrack].text; // 修改路徑
+            d.src = "./videos/" + trackNames[currentTrack].value; // 修改路徑
             d.play(); // 播放
 			d.playbackRate = document.fnspeed.nspeed.value;
         }
@@ -190,7 +166,7 @@
 				}
 			}
 			
-			this.src = "./videos/" + trackNames[currentTrack].text; // 修改路徑
+			this.src = "./videos/" + trackNames[currentTrack].value; // 修改路徑
 			this.play();
 			this.playbackRate = document.fnspeed.nspeed.value;
 			
@@ -202,7 +178,7 @@
 		else if(randomPlay == 0){//照順序
 			trackNames.selectedIndex = (trackNames.selectedIndex + 1) % trackNames.length;
 			currentTrack = trackNames.selectedIndex;
-			this.src = "./videos/" + trackNames[currentTrack].text; // 修改路徑
+			this.src = "./videos/" + trackNames[currentTrack].value; // 修改路徑
 			this.play();
 			this.playbackRate = document.fnspeed.nspeed.value;
 		}
@@ -308,7 +284,7 @@
     }
 	
 	window.onload = function(){
-		d.src = "./videos/" + trackNames[getCookie("contTrack")].text;
+		d.src = "./videos/" + trackNames[getCookie("contTrack")].value;
 		currentTrack = getCookie("contTrack");
 		trackNames.selectedIndex = currentTrack;
 		randomPlay = getCookie("random");

@@ -1,0 +1,28 @@
+
+body
+{
+	background-color: rgba(0, 191, 255, 0.7);
+	background-attachment:fixed;
+	background-size:100%;
+}
+
+video.cmainPlayer
+{
+	background-color:black;
+	width: 800px;
+	height: 450px;
+	margin: auto;
+	display: block;
+}
+video.prepareList
+{
+	background-color:black;
+	width: 176px;
+	height: 99px;
+
+}
+.videoList
+{
+	text-align: center;
+
+}
