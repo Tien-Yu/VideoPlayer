@@ -1,301 +1,53 @@
-﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<title>SKYAND-HW06</title>
 	<link rel="shortcut icon" href="http://m100.nthu.edu.tw/~s100071049/pics/iconDSno.ico" type="image/x-icon" >
-	<link href="css/videoplayer.css" rel="stylesheet">
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
-	<script type="text/javascript">
-	$(document).ready(function(){
-		//cabrepeat
-		jQuery.cabrepeat = function(focusdom,focuswidthnew) {
-			var focusblurmenuid = $(focusdom);
-			var defval = focusblurmenuid.val();
-			var defwidth = focusblurmenuid.width();
-			focusblurmenuid.focus(function(){
-				var thisval = $(this).val();
-				if(thisval==defval){
-					$(this).val("");
-					$(this).animate({width:"+"+focuswidthnew}, focuswidthnew).addClass("searchkeyfocus");
-				}
-			});
-			focusblurmenuid.blur(function(){
-				var thisval = $(this).val();
-				if(thisval==""){
-					$(this).val(defval);
-				}
-				$(this).animate({width:"+"+defwidth}, focuswidthnew).removeClass("searchkeyfocus");
-			});
-			
-		};
-		$.cabrepeat("#istartTime","80px");
-		$.cabrepeat("#iendTime","80px");
-	});
-	</script>
+	<!----------------CSS----------------->
+	<link href="css/videoplayer_new.css" rel="stylesheet">
+	<!----------------jQuery----------------->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	
 </head>
 
-<body onBeforeUnload="record(d.currentTime, currentTrack, randomPlay, d.playbackRate, lastTrack)">
-<div class="center">
-	<br>
-	<video id="myPlayer" src="" controls width="600" height="400" style="border:15px double #FFFF99" speed="3">
-		您的瀏覽器不支援HTML 5影片播放標籤video格式。
-		Your browser doesn't support the video tag.
-	</video><br>
-
+<body>
+<br><br>
+<!--video-->
+<video id="mainPlayer" class="cmainPlayer" controls preload="auto">
+    <source src="./videos/TEDTalk.mp4" type="video/mp4">
+    <p>你的瀏覽器不支援 video 標籤</p>
+    <p>下載 <a href="./videos/Ben Carson TED Talk.mp4">mp4 格式</a>的影片檔</p>
+</video>
 <!--速度-->
-<form class="cspeed" name="fnspeed" align="center">
-	<font face="Segoe Script" size="5" color="FFFF99">speed</font><br>
-	<input type="range" min="0.5" max="4" step="0.1" value="1" name="nspeed" onchange="changeSpeed(this.value)">
-	<input type="text" name="show" size="1" value="1" onchange="changeSpeed(this.value)">
-	<font face="Segoe Script" size="3" color="FFFF99">times</font><br>
-</form>
-
-<!--AB repeat-->
-<form class="cabrepeat" name="fnabrepeat" align="center">
-	<font face="Segoe Script" size="5" color="FFFF99">A-B repeat<br></font><br>
-	<input type="text" name="nstartTime" id="istartTime" size="5" placeholder="開始時間">
-	<font face="Segoe Script" size="3" color="FFFF99">sec. ~</font>
-	<input type="text" name="nendTime" id="iendTime" size="5" placeholder="結束時間">
-	<font face="Segoe Script" size="3" color="FFFF99">sec.</font><br><br>
-	<input type="image" class="now1" src="./pics/hw6/nowno.png" width="50" onClick="nowTime1();return false;" onmousedown="src='./pics/hw6/nowpressno.png'" onmouseover="src='./pics/hw6/nowoverno.png'" onmouseout="src='./pics/hw6/nowno.png'">
-	<input type="image" class="now2" src="./pics/hw6/nowno.png" width="50" onClick="nowTime2();return false;" onmousedown="src='./pics/hw6/nowpressno.png'" onmouseover="src='./pics/hw6/nowoverno.png'" onmouseout="src='./pics/hw6/nowno.png'">
-	<input type="image" class="play" src="./pics/hw6/playno.png" width="50" onClick="stopyes = 0;playBetween(this.form.istartTime.value, this.form.iendTime.value);return false;" onmouseover="width='55'" onmouseout="width='50'"><br>
-	<input type="image" class="stop" src="./pics/hw6/stopno.png" width="50" onClick="stopyes = 1;return false;" onmouseover="width='55'" onmouseout="width='50'"><br>
-</form>
-
-
-<!--上一首-->	
-<div class="previous">
-	<input type="image" value="last" src="./pics/hw6/previousno.png" id="next" width="75" onmouseover="width='85'" onmouseout="width='75'" onClick="lasttTrack()">
-</div>
-<!--playList-->
-<form class="cplayList" name="fnplayList" align="center">
+<form class="cspeed" align="center">
+	<img id="loop" src="pics/loop_.png">
+	<img id="shuffle" src="pics/shuffle_.png">
+	<input id="speedRange" type="range" min="0.25" max="4" step="0.05" value="1">
+	<input id="speedShow" type="text" size="1" value="1">
 	<br>
-	<select id="playList" size="8" ondblclick="playTrack()" class="Se">
-        <option value="2013QFcamp1.mp4">2013QFcamp1</option>
-        <option value="2013QFcamp2.mp4">2013QFcamp2</option>
-		<option value="snake.mp4">snake</option>
-		<option value="Ben Carson TED Talk.mp4">Ben Carson TED Talk</option>
-    </select>
 </form>
-	<!--播放型態-->
-	<input type="image" class="random" src="./pics/hw6/shuffleno.png" width="100" onClick="randomPlay = 1;" onmousedown="src='./pics/hw6/shufflepressno.png';" onmouseover="src='./pics/hw6/shuffleoverno.png'" onmouseout="src='./pics/hw6/shuffleno.png'">
-	<input type="image" class="auto" src="./pics/hw6/autono.png" width="100" onClick="randomPlay = 0;" onmousedown="src='./pics/hw6/autopressno.png';" onmouseover="src='./pics/hw6/autooverno.png'" onmouseout="src='./pics/hw6/autono.png'">
-	<input type="image" class="single" src="./pics/hw6/singleno.png" width="100" onClick="randomPlay = 2;" onmousedown="src='./pics/hw6/singlepressno.png';" onmouseover="src='./pics/hw6/singleoverno.png'" onmouseout="src='./pics/hw6/singleno.png'">
-	
-
-<!--下一首-->	
-<div class="next">
-	<input type="image" value="next" src="./pics/hw6/nextno.png" id="next" width="75" onmouseover="width='85'" onmouseout="width='75'" onClick="nexttTrack()"><br>
+<br>
+<div class="videoList">
+	<video id="prepareVideo1" src="./videos/snake.mp4" class="prepareList" preload="auto"></video>
+	<video id="prepareVideo2" src="./videos/2013QFcamp2.mp4" class="prepareList" preload="auto"></video>
+	<video id="prepareVideo3" src="./videos/MOV_0197.mp4" class="prepareList" preload="auto"></video>
+	<video id="prepareVideo4" src="./videos/TEDTalk.mp4" class="prepareList" preload="auto"></video>
+	<video id="prepareVideo5" src="./videos/MOV_0200.mp4" class="prepareList" preload="auto"></video>
 </div>
 
-<script>
-	d = document.getElementById("myPlayer");
-	pL = document.getElementById("playList");
-	trackNames = pL.options;
-	timer = null;
-	currentTrack = 0;
-	lastTrack = 0;
-	randomPlay = 2;//預設單一影片播放
-	recordyes = 1;
-	stopyes = 0;
-	i = 0;
-	nowTrack = 0;
-	randomList = new Array();
-	
-	//改變速度
-	function changeSpeed(speed){
-		document.fnspeed.show.value = speed;
-		document.fnspeed.nspeed.value = speed;
-		clearTimeout(timer); // 免除 playBetween 設下的暫停影響
-		d.playbackRate = speed;
-	}
-	
-	//AB重複
-	function playBetween(startTime, endTime){
-		clearTimeout(timer);// 免除前一次 playBetween 設下的暫停影響
-		d.playbackRate = document.fnspeed.nspeed.value;
-		d.currentTime = startTime;
-		d.play();
-		timer = setTimeout("playStop()", (endTime-startTime)*1000/d.playbackRate); // 預約暫停
-	}
-	function nowTime1(){//填當前時間在開始時間
-	clearTimeout(timer);
-		document.fnabrepeat.nstartTime.value = d.currentTime;
-	}
-	function nowTime2(){//填當前時間在結束時間
-	clearTimeout(timer);
-		document.fnabrepeat.nendTime.value = d.currentTime;
-	}
-	
-	function playStop(){
-		if(stopyes == 0){
-			myPlayer.currentTime = document.fnabrepeat.nstartTime.value;
-			d.play();
-			timer = setTimeout("playStop()", (document.fnabrepeat.nendTime.value-document.fnabrepeat.nstartTime.value)*1000/d.playbackRate); // 預約暫停
-		}
-		else{
-			d.pause();
-		}
-	}
-	
-	//選歌
-	function playTrack(){
-        if(trackNames.selectedIndex >= 0){ // 防止空白處被點選時產生之錯誤
-			clearTimeout(timer); // 免除 playBetween 設下的暫停影響
-			currentTrack = trackNames.selectedIndex;
-            d.src = "./videos/" + trackNames[currentTrack].value; // 修改路徑
-            d.play(); // 播放
-			d.playbackRate = document.fnspeed.nspeed.value;
-        }
-    }
-	
-	//連續播放(隨機/照順序)
-	d.addEventListener('ended', function() {
-		lastTrack = currentTrack;//randomPlay三種狀況都適用
-		if(randomPlay == 1){//隨機
-			var timee = new Date();
-			trackNames.selectedIndex = timee.getTime() % trackNames.length;
-			currentTrack = trackNames.selectedIndex;
-			if(lastTrack == currentTrack){
-				if(currentTrack == trackNames.length-1){
-					currentTrack--;
-				}
-				else{
-					currentTrack++;
-				}
-			}
-			
-			this.src = "./videos/" + trackNames[currentTrack].value; // 修改路徑
-			this.play();
-			this.playbackRate = document.fnspeed.nspeed.value;
-			
-			randomList[i] = trackNames.selectedIndex;
-			nowTrack = i;
-			i++;
-			//alert("randomList" + (i-1) + "=" + randomList[i-1]);
-		}
-		else if(randomPlay == 0){//照順序
-			trackNames.selectedIndex = (trackNames.selectedIndex + 1) % trackNames.length;
-			currentTrack = trackNames.selectedIndex;
-			this.src = "./videos/" + trackNames[currentTrack].value; // 修改路徑
-			this.play();
-			this.playbackRate = document.fnspeed.nspeed.value;
-		}
-    });
-	
-	d.addEventListener('play', function() {
-		if(recordyes == 1){
-			d.currentTime = aaa;
-		}
-		recordyes = 0;
-	});
-	
-	
-	//下一首
-	function nexttTrack(){
-		lastTrack = currentTrack;
-			if(randomPlay == 1){//隨機
-				if(randomList[i] == undefined){
-					if(randomList[i-1] == undefined){
-						i--;
-					}
-					var timee = new Date();
-					trackNames.selectedIndex = timee.getTime() % trackNames.length;
-					currentTrack = trackNames.selectedIndex;
-					if(lastTrack == currentTrack){
-						if(currentTrack == trackNames.length-1){
-							trackNames.selectedIndex--;
-						}
-						else{
-							trackNames.selectedIndex++;
-						}
-					}
-				}
-				else{
-					trackNames.selectedIndex = randomList[nowTrack + 1];
-				}
-				playTrack();
-				
-				randomList[i] = trackNames.selectedIndex;
-				nowTrack = i;
-				i++;
-				//alert("randomList" + (i-1) + "=" + randomList[i-1]);
-			}
-			else{//照順序
-				trackNames.selectedIndex = (trackNames.selectedIndex + 1) % trackNames.length;
-				playTrack();
-			}
-	}
-	
-	//上一首
-	function lasttTrack(){
-		if(randomPlay == 1){
-			i--;
-			if((i-1) < 0){
-				alert("沒有上一首囉~~");
-				trackNames.selectedIndex = randomList[0];//沒有上一首就播第一首
-				nowTrack = 0;
-			}
-			else{
-				trackNames.selectedIndex = randomList[i-1];
-				nowTrack = i-1;
-			}
-		}
-		else if(randomPlay == 0 || randomPlay == 2){
-			if(trackNames.selectedIndex != 0){
-				trackNames.selectedIndex--;
-			}
-			else{
-				trackNames.selectedIndex = trackNames.length - 1;
-			}
-		}
-		playTrack();
-	}
-	
-	<!--記錄播放歷程-->
-	function record(timeVal, trackVal, randomVal, speedVal, lastVal){//setcookie
-		now = new Date();
-		expDate = new Date();
-		expDate.setTime(now.getTime() + 1000*60*60); // 一小時
-        document.cookie = "time=" + timeVal + ";expires=" + expDate.toGMTString();
-		document.cookie = "contTrack=" + trackVal + ";expires=" + expDate.toGMTString();
-		document.cookie = "random=" + randomVal + ";expires=" + expDate.toGMTString();
-		document.cookie = "speed=" + speedVal + ";expires=" + expDate.toGMTString();
-		document.cookie = "last=" + lastVal + ";expires=" + expDate.toGMTString();
-	}
-	
-	function getCookie(name){
-        cookieArr = document.cookie.split('; ');
-        for(i=0;i<cookieArr.length;i++){
-            thisCookie = cookieArr[i].split('=');
-            thisName = thisCookie[0];
-            thisVal = thisCookie[1];
-            if(thisName==name){
-               return thisVal;
-            }
-        }
-		if(name == "speed"){
-			return 1;
-		}
-		else{
-			return 0;
-		}
-    }
-	
-	window.onload = function(){
-		d.src = "./videos/" + trackNames[getCookie("contTrack")].value;
-		currentTrack = getCookie("contTrack");
-		trackNames.selectedIndex = currentTrack;
-		randomPlay = getCookie("random");
-		changeSpeed(getCookie("speed"));
-		lastTrack = getCookie("last");
-		aaa=parseFloat(getCookie("time"));
-		
-	}
-	
-</script>
+<select class="videoList_hide" id="playList">
+	<option id="prepareVideo1o">snake.mp4</option>
+	<option id="prepareVideo2o">2013QFcamp2.mp4</option>
+	<option id="prepareVideo3o">MOV_0197.mp4</option>
+	<option id="prepareVideo4o" selected>TEDTalk.mp4</option>
+	<option id="prepareVideo5o">MOV_0200.mp4</option>
+</select>
 
-</div>	
+
+<!----------------JavaScript----------------->
+<script src="js/videoPlayer.js"></script>
+
+
+
 </body>
 </html>
