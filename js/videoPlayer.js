@@ -5,6 +5,10 @@ var lastTrack = 3;
 var currentTrack = 3;
 var random = false; //play mode
 
+window.onload = function(){
+	currVideo.play();
+}
+
 $(".prepareList").click(function(){
 	var prepareVideo = document.getElementById(this.id);
 	document.getElementById(this.id+"o").selected=true;
@@ -16,6 +20,8 @@ $(".prepareList").click(function(){
 	currVideo.playbackRate = 1;
 	
 	currVideo.play();
+	// update currentTrack
+	currentTrack = trackNames.selectedIndex;
 	//update lastTrack
 	lastTrack = currentTrack;
 });
@@ -54,7 +60,7 @@ $("#mainPlayer").on({
 });
 //
 
-currVideo.play();
+
 currVideo.addEventListener('ended', function() { //Callback
 	if(random==false){
 		if(lastTrack==trackNames.length-1){
