@@ -3,6 +3,7 @@ var currVideo = document.getElementById("mainPlayer");
 var trackNames = document.getElementById("playList");
 var lastTrack = 3;
 var currentTrack = 3;
+var random = false; //play mode
 
 $(".prepareList").click(function(){
 	var prepareVideo = document.getElementById(this.id);
@@ -15,6 +16,8 @@ $(".prepareList").click(function(){
 	currVideo.playbackRate = 1;
 	
 	currVideo.play();
+	//update lastTrack
+	lastTrack = currentTrack;
 });
 
 // Speed bar
@@ -49,33 +52,64 @@ $("#mainPlayer").on({
 		}	
 	}
 });
+//
+
+currVideo.play();
+currVideo.addEventListener('ended', function() { //Callback
+	if(random==false){
+		if(lastTrack==trackNames.length-1){
+			currentTrack = 0;
+		}
+		else{
+			currentTrack++;
+		}
+		// 修改路徑
+		currVideo.src = "./videos/" + trackNames[currentTrack].value;
+		currVideo.play();
+		// reset the speed
+		$("#speedRange").val(1);
+		$("#speedShow").val(1);
+		currVideo.playbackRate = 1;
+		//update lastTrack
+		lastTrack = currentTrack;
+	}
+	else if(random==true){
+		var timee = new Date(); //用來亂數
+		trackNames.selectedIndex = timee.getTime() % trackNames.length;
+		currentTrack = trackNames.selectedIndex;
+		
+		// not allow same track
+		while(lastTrack==currentTrack){
+			timee = new Date();
+			trackNames.selectedIndex = timee.getTime() % trackNames.length;
+			currentTrack = trackNames.selectedIndex;
+		}
+		// 修改路徑
+		this.src = "./videos/" + trackNames[currentTrack].value;
+		this.play();
+		// reset the speed
+		$("#speedRange").val(1);
+		$("#speedShow").val(1);
+		this.playbackRate = 1;
+		//update lastTrack
+		lastTrack = currentTrack;
+	}
+	
+})
+
 
 // Shuffle play
 $("#shuffle").on({
 	click: function(){
-		$(this).attr("src", "pics/shuffle_c.png");
-		lastTrack = currentTrack;
-		currVideo.addEventListener('ended', function() { //Callback
-			var timee = new Date(); //用來亂數
-			trackNames.selectedIndex = timee.getTime() % trackNames.length;
-			currentTrack = trackNames.selectedIndex;
-			
-			// not allow same track
-			while(lastTrack==currentTrack){
-				timee = new Date();
-				trackNames.selectedIndex = timee.getTime() % trackNames.length;
-				currentTrack = trackNames.selectedIndex;
-			}
-			// 修改路徑
-			this.src = "./videos/" + trackNames[currentTrack].value;
-			this.play();
-			// reset the speed
-			$("#speedRange").val(1);
-			$("#speedShow").val(1);
-			this.playbackRate = 1;
-			//update lastTrack
-			lastTrack = currentTrack;
-		})
+		if(random==false){
+			$(this).attr("src", "./pics/shuffle_c.png");
+			random = true;
+		}
+		else if(random==true){
+			$(this).attr("src", "./pics/shuffle_.png");
+			random = false;
+		}
+		
 	},
 	mouseenter: function(){ //mouseenter, mouseleave一起用代表hover
 		$(this).css("cursor", "pointer");
