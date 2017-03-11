@@ -3,7 +3,8 @@ var currVideo = document.getElementById("mainPlayer");
 var trackNames = document.getElementById("playList");
 var lastTrack = 3;
 var currentTrack = 3;
-var random = false; //play mode
+var random = false; //shuffle play mode
+var auto = false; //auto play mode
 
 window.onload = function(){
 	currVideo.play();
@@ -28,7 +29,13 @@ $(".prepareList").click(function(){
 
 // Speed bar
 $("#speedRange").change(function(){
-	$("#speedShow").val($(this).val());
+	if($(this).val()==1){
+		$("#speedShow").html("Speed: Normal");
+	}
+	else if($(this).val()!=1){
+		$("#speedShow").html("Speed: "+ $(this).val());
+	}
+	
 	currVideo.playbackRate = $(this).val();
 });
 
@@ -71,7 +78,9 @@ currVideo.addEventListener('ended', function() { //Callback
 		}
 		// 修改路徑
 		currVideo.src = "./videos/" + trackNames[currentTrack].value;
-		currVideo.play();
+		if(auto==true){
+			currVideo.play();
+		}
 		// reset the speed
 		$("#speedRange").val(1);
 		$("#speedShow").val(1);
@@ -92,7 +101,9 @@ currVideo.addEventListener('ended', function() { //Callback
 		}
 		// 修改路徑
 		this.src = "./videos/" + trackNames[currentTrack].value;
-		this.play();
+		if(auto==true){
+			this.play();
+		}
 		// reset the speed
 		$("#speedRange").val(1);
 		$("#speedShow").val(1);
@@ -114,6 +125,27 @@ $("#shuffle").on({
 		else if(random==true){
 			$(this).attr("src", "./pics/shuffle_.png");
 			random = false;
+		}
+		
+	},
+	mouseenter: function(){ //mouseenter, mouseleave一起用代表hover
+		$(this).css("cursor", "pointer");
+	},
+	mouseleave: function(){
+		$(this).css("cursor", "auto");
+	}
+});
+
+// Auto play (not single)
+$("#loop").on({
+	click: function(){
+		if(auto==false){
+			$(this).attr("src", "./pics/loop_c.png");
+			auto = true;
+		}
+		else if(auto==true){
+			$(this).attr("src", "./pics/loop_.png");
+			auto = false;
 		}
 		
 	},

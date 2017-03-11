@@ -5,6 +5,7 @@
 	<link rel="shortcut icon" href="http://m100.nthu.edu.tw/~s100071049/pics/iconDSno.ico" type="image/x-icon" >
 	<!----------------CSS----------------->
 	<link href="css/videoplayer_new.css" rel="stylesheet">
+	<link href="css/range.css" rel="stylesheet">
 	<!----------------jQuery----------------->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	
@@ -20,10 +21,10 @@
 </video>
 <!--速度-->
 <form class="cspeed" align="center">
-	<img id="loop" src="pics/loop_.png">
-	<img id="shuffle" src="pics/shuffle_.png">
-	<input id="speedRange" type="range" min="0.25" max="4" step="0.05" value="1">
-	<input id="speedShow" type="text" size="1" value="1">
+	<img id="loop" src="pics/loop_.png" title="auto play">
+	<img id="shuffle" src="pics/shuffle_.png" title="shuffle">
+	<input id="speedRange" type="range" min="0.25" max="2" step="0.25" value="1" title="speed">
+	<span id="speedShow" type="text" size="1" value="1">Speed: Normal</span>
 	<br>
 </form>
 <br>
